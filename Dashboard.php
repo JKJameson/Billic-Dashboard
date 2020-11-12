@@ -6,6 +6,16 @@ class Dashboard {
 		'admin_menu_icon' => '<i class="icon-tachometer"></i>',
 		'description' => 'Provides a dashboard for admins with support for sub-modules.',
 	);
+	function call_submodule($id) {
+		global $billic;
+		$billic->current_module = $id;
+		$data = call_user_func(array(
+                	$billic->modules[$id],
+                	'dashboard_submodule'
+                ));
+		$billic->current_module = 'Dashboard';
+		return $data;
+	}
 	function admin_area() {
 		global $billic, $db;
 		if (!$billic->user_has_permission($billic->user, 'Dashboard')) {
@@ -190,10 +200,7 @@ function saveOrder(){
 			$billic->module($id);
 			if (method_exists($billic->modules[$id], 'dashboard_submodule')) {
 				echo '<submodule id="' . $id . '" data-row="' . $row . '" data-col="1" data-sizex="1" data-sizey="1">';
-				$a = call_user_func(array(
-					$billic->modules[$id],
-					'dashboard_submodule'
-				));
+				$a = $this->call_submodule($id);
 				echo '<div class="submodule-header">' . $a['header'] . '</div><div class="submod">' . $a['html'] . '</div>';
 				echo '</submodule>';
 				$row++;
@@ -207,10 +214,7 @@ function saveOrder(){
 			$billic->module($id);
 			if (method_exists($billic->modules[$id], 'dashboard_submodule')) {
 				echo '<submodule id="' . $id . '" data-row="' . $row . '" data-col="2" data-sizex="1" data-sizey="1">';
-				$a = call_user_func(array(
-					$billic->modules[$id],
-					'dashboard_submodule'
-				));
+				$a = $this->call_submodule($id);
 				echo '<div class="submodule-header">' . $a['header'] . '</div><div class="submod">' . $a['html'] . '</div>';
 				echo '</submodule>';
 				$row++;
@@ -224,10 +228,7 @@ function saveOrder(){
 			$billic->module($id);
 			if (method_exists($billic->modules[$id], 'dashboard_submodule')) {
 				echo '<submodule id="' . $id . '" data-row="' . $row . '" data-col="3" data-sizex="1" data-sizey="1">';
-				$a = call_user_func(array(
-					$billic->modules[$id],
-					'dashboard_submodule'
-				));
+				$a = $this->call_submodule($id);
 				echo '<div class="submodule-header">' . $a['header'] . '</div><div class="submod">' . $a['html'] . '</div>';
 				echo '</submodule>';
 				$row++;
