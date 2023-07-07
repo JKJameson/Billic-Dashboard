@@ -21,7 +21,7 @@ class Dashboard {
 		if (!$billic->user_has_permission($billic->user, 'Dashboard')) {
 			err('You do not have permission to view this page');
 		}
-		if ($_GET['Ajax'] == 'Update') {
+		if (isset($_GET['Ajax']) && $_GET['Ajax'] == 'Update') {
 			ob_clean();
 			$billic->disable_content();
 			//var_dump($_POST); exit;
@@ -44,7 +44,7 @@ class Dashboard {
 			echo 'OK';
 			exit;
 		}
-		if ($_GET['ClearOrder'] == 'Yes') {
+		if (isset($_GET['ClearOrder']) && $_GET['ClearOrder'] == 'Yes') {
 			set_config('dashboard_order_' . $billic->user['id'], '');
 			$billic->redirect('/Admin/Dashboard/');
 		}
