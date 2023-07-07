@@ -52,7 +52,7 @@ class Dashboard {
 		echo '<h1><i class="icon-tachometer"></i> Admin Dashboard</h1>';
 		//echo '<meta http-equiv="refresh" content="60">';
 
-		$diff = floor(time() - (int)get_config('cron_last_success')/60);
+		$diff = floor((time() - (int)get_config('cron_last_success'))/60);
 		if ($diff > 5) echo "<div class=\"alert alert-warning\">The last successful cron was $diff minutes ago. Please check your crontab for problems.</div>";
 		
 ?>
